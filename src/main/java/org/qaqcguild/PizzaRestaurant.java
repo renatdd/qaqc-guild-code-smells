@@ -9,15 +9,20 @@ import java.util.stream.Collectors;
 public class PizzaRestaurant {
 
     private final List<Order> orders = new ArrayList<>();
+    private final Menu menu;
 
     public PizzaRestaurant() {
+        this.menu = new Menu();
     }
 
-    public Order makeNewOrder(Client client, Pizza... pizzas)  throws RuntimeException {
-        Long orderNumber = (long) orders.size() + 1;
-        Order newOrder = new Order(orderNumber, LocalDateTime.now(), client, pizzas);
+    public Order makeNewOrder(Client client, Pizza... pizzas) {
+        Order newOrder = new Order(getOrderNumber(), LocalDateTime.now(), client, pizzas);
         orders.add(newOrder);
         return newOrder;
+    }
+
+    private long getOrderNumber() {
+        return (long) orders.size() + 1;
     }
 
     public List<Order> getOrders() {

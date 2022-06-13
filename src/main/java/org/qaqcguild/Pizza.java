@@ -1,5 +1,7 @@
 package org.qaqcguild;
 
+import org.qaqcguild.toppings.PizzaTopping;
+
 public class Pizza {
 
     private final PizzaTopping topping;
@@ -20,6 +22,10 @@ public class Pizza {
 
     public Double getPrice() {
         return getTopping().getPrice();
+    }
+
+    public String getName() {
+        return getTopping().getName();
     }
 
     public void setQuantity(Integer quantity) {

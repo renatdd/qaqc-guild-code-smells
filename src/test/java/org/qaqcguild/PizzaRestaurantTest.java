@@ -1,16 +1,18 @@
 package org.qaqcguild;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.qaqcguild.errors.InvalidStatusCodeException;
+import org.qaqcguild.toppings.MozzarellaTopping;
+import org.qaqcguild.toppings.PepperoniTopping;
 
 class PizzaRestaurantTest {
 
-    private static PizzaRestaurant pizzaRestaurant;
+    private PizzaRestaurant pizzaRestaurant;
 
-    @BeforeAll
-    static void setPizzaRestaurant() {
+    @BeforeEach
+    void setPizzaRestaurant() {
         pizzaRestaurant = new PizzaRestaurant();
     }
 
@@ -40,8 +42,8 @@ class PizzaRestaurantTest {
                 .build();
         ClientPhone phone = new ClientPhone("081999999999");
         Client client = new Client("Renato", "Feitosa", phone, address);
-        Pizza pepperoniPizza = new Pizza(PizzaTopping.PEPPERONI, 1);
-        Pizza mozzarellaPizza = new Pizza(PizzaTopping.MOZZARELLA, 1);
+        Pizza pepperoniPizza = new Pizza(new PepperoniTopping(), 1);
+        Pizza mozzarellaPizza = new Pizza(new MozzarellaTopping(), 1);
 
         return pizzaRestaurant.makeNewOrder(client, pepperoniPizza, mozzarellaPizza);
     }

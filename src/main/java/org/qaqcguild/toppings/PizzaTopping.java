@@ -1,23 +1,26 @@
-package org.qaqcguild;
+package org.qaqcguild.toppings;
 
 import java.text.NumberFormat;
 
 public class PizzaTopping {
 
-    public final static PizzaTopping MOZZARELLA = new PizzaTopping(1, 9.50);
-    public final static PizzaTopping PEPPERONI = new PizzaTopping(2, 11.20);
-    public final static PizzaTopping MARGHERITA = new PizzaTopping(3, 10.10);
-
     private final Integer code;
+    private final String name;
     private final Double price;
 
-    public PizzaTopping(Integer code, Double price) {
+
+    public PizzaTopping(Integer code, String name, Double price) {
         this.code = code;
+        this.name = name;
         this.price = price;
     }
 
     public Integer getCode() {
         return code;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Double getPrice() {
@@ -32,7 +35,9 @@ public class PizzaTopping {
     public String toString() {
         return "PizzaTopping{" +
                 "code=" + code +
+                "name=" + name +
                 ", price=" + getPriceString() +
                 '}';
     }
+
 }

@@ -40,8 +40,8 @@ class PizzaRestaurantTest {
                 .build();
         ClientPhone phone = new ClientPhone("081999999999");
         Client client = new Client("Renato", "Feitosa", phone, address);
-        Pizza pepperoniPizza = new Pizza(Pizza.PEPPERONI_TOPPING, 1);
-        Pizza mozzarellaPizza = new Pizza(Pizza.MOZZARELLA_TOPPING, 1);
+        Pizza pepperoniPizza = new Pizza(PizzaTopping.PEPPERONI, 1);
+        Pizza mozzarellaPizza = new Pizza(PizzaTopping.MOZZARELLA, 1);
 
         return pizzaRestaurant.makeNewOrder(client, pepperoniPizza, mozzarellaPizza);
     }

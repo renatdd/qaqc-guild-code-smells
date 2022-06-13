@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.qaqcguild.errors.InvalidStatusCodeException;
-import org.qaqcguild.errors.InvalidToppingCodeException;
 
 class PizzaRestaurantTest {
 
@@ -20,56 +19,40 @@ class PizzaRestaurantTest {
 
         Order newOrder = getValidOrder();
 
-        printOrder(newOrder);
+        TestUtils.printObject(newOrder);
 
-        Assertions.assertEquals("Renato Feitosa", newOrder.getClientName());
-        Assertions.assertEquals("81999999999", newOrder.getClientPhone());
-        Assertions.assertEquals("Rua da Pizza, 57", newOrder.getClientAddress());
-        Assertions.assertEquals(2, newOrder.getPizzaTopping());
-        Assertions.assertEquals(1, newOrder.getPizzaQuantity());
-        Assertions.assertEquals(11.20, newOrder.getPizzaPrice());
-        Assertions.assertEquals(11.20, newOrder.getOrderTotal());
+        Assertions.assertEquals("Renato Feitosa", newOrder.getClient().getFullName());
+        Assertions.assertEquals("(81) 99999-9999", newOrder.getClient().getPhone().toString());
+        Assertions.assertEquals("Rua dos Carecas", newOrder.getClient().getAddress().getStreet());
 
-        Assertions.assertEquals(2, newOrder.addQuantity(1));
-        Assertions.assertEquals(22.40, newOrder.getOrderTotal());
+        Assertions.assertEquals(20.70, newOrder.getBillTotal());
 
         Assertions.assertEquals(1, pizzaRestaurant.getTotalOrders());
         Assertions.assertEquals(1, pizzaRestaurant.getOrdersQuantityByStatus(1));
     }
 
-    private void printOrder(Order newOrder) {
-        System.out.println("\n\n==================================================================");
-        System.out.println(newOrder);
-        System.out.println("==================================================================\n\n");
-    }
-
     private Order getValidOrder() {
-        return pizzaRestaurant.makeNewOrder(
-                "Renato Feitosa",
-                "81999999999",
-                "Rua da Pizza, 57",
-                Order.PEPPERONI_TOPPING,
-                1);
+        ClientAddress address = ClientAddress.builder()
+                .street("Rua dos Carecas")
+                .number("57")
+                .district("Bairro dos Sem-Telha")
+                .city("Baldtown")
+                .build();
+        ClientPhone phone = new ClientPhone("081999999999");
+        Client client = new Client("Renato", "Feitosa", phone, address);
+        Pizza pepperoniPizza = new Pizza(Pizza.PEPPERONI_TOPPING, 1);
+        Pizza mozzarellaPizza = new Pizza(Pizza.MOZZARELLA_TOPPING, 1);
+
+        return pizzaRestaurant.makeNewOrder(client, pepperoniPizza, mozzarellaPizza);
     }
 
-    @Test
-    void shouldThrowErrorWhenPizzaOfUnkownType() {
-        Assertions.assertThrows(InvalidToppingCodeException.class, () ->{
-            pizzaRestaurant.makeNewOrder(
-                    "New Client",
-                    "99999999999",
-                    "432 Bloaters St.",
-                    4,
-                    1);
-        });
-    }
 
     @Test
     void shouldThrowErrorWhenSetInvalidStatusCode() {
         Order newOrder = getValidOrder();
 
         Assertions.assertThrows(InvalidStatusCodeException.class, () ->{
-            newOrder.setOrderStatus(6);
+            newOrder.setStatus(6);
         });
     }
 

@@ -13,11 +13,9 @@ public class PizzaRestaurant {
     public PizzaRestaurant() {
     }
 
-    public Order makeNewOrder(String clientName, String clientPhone, String clientAddress, Integer pizzaTopping,
-                              Integer pizzaQuantity)  throws RuntimeException {
+    public Order makeNewOrder(Client client, Pizza... pizzas)  throws RuntimeException {
         Long orderNumber = (long) orders.size() + 1;
-        Order newOrder = new Order(orderNumber, LocalDateTime.now(), clientName, clientPhone, clientAddress,
-                pizzaTopping, pizzaQuantity);
+        Order newOrder = new Order(orderNumber, LocalDateTime.now(), client, pizzas);
         orders.add(newOrder);
         return newOrder;
     }
@@ -31,7 +29,7 @@ public class PizzaRestaurant {
     }
 
     public List<Order> getOrdersByStatus(Integer statusCode) {
-        return orders.stream().filter(order -> Objects.equals(order.getOrderStatus(), statusCode)).collect(Collectors.toList());
+        return orders.stream().filter(order -> Objects.equals(order.getStatus(), statusCode)).collect(Collectors.toList());
     }
 
     public Integer getOrdersQuantityByStatus(Integer statusCode) {
